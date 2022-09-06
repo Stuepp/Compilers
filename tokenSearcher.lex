@@ -30,13 +30,27 @@ ID        [a-z][a-z0-9]*
                     atof( yytext ) );
             }
 
-"if"         {printf("condicional if: %s\n", yytext);}
+{LOWERCASE}+    {
+        printf("a lowercase: %s\n", yytext);
+}
 
-"and"         {printf("uniao and: %s\n", yytext);}
+{UPPERCASE}+     {
+        printf("a uppercase: %s\n", yytext);
+}
 
-if|then|begin|end|procedure|function        {
-            printf( "Uma palavra-chave: %s\n", yytext );
-            }
+"if"    {printf("condicional if: %s\n", yytext);}
+
+"and"   {printf("uniao and: %s\n", yytext);}
+
+"then"  {printf("Um then: %s\n", yytext);}
+
+"begin" {printf("Um begin: %s\n", yytext);}
+
+"end"   {printf("Um end: %s\n", yytext);}
+
+"procedure"     {printf("Um procedure: %s\n", yytext);}
+
+"function"      {printf( "Um function: %s\n", yytext );}
 
 {ID}        printf( "Um identificador: %s\n", yytext );
 
