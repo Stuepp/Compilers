@@ -25,36 +25,41 @@ ID        [a-z][a-z0-9]*
                     atoi( yytext ) );
             }
 
-{DIGITO}+"."{DIGITO}*        {
-            printf( "Um valor real: %s (%g)\n", yytext,
-                    atof( yytext ) );
-            }
+"if"    {printf("condicional if: %s\n", yytext);}
+"while" {printf("condicional while: %s\n", yytext);}
+"and"   {printf("uniao and: %s\n", yytext);}
+"then"  {printf("Um then: %s\n", yytext);}
+"begin" {printf("Um begin: %s\n", yytext);}
+"end"   {printf("Um end: %s\n", yytext);}
+"return" {printf("expressao return: %s\n", yytext);}
+"procedure"     {printf("Um procedure: %s\n", yytext);}
+"function"      {printf( "Um function: %s\n", yytext );}
 
-{LOWERCASE}+    {
-        printf("a lowercase: %s\n", yytext);
-}
+"+" {printf("operador de soma: %s\n", yytext);}
+"-" {printf("operador de subtracao: %s\n", yytext);}
+"*" {printf("operador de multiplicacao: %s\n", yytext);}
+"/" {printf( "Um operador de divisao: %s\n", yytext );}
+
+"(" {printf("abre-parenteses: %s", yytext);}
+")" {printf("fecha-parenteses: %s", yytext);}
+"{" {printf("abre-chaves: %s", yytext);}
+"}" {printf("fecha-chaves: %s", yytext);}
+"[" {printf("abre-conchetes: %s", yytext);}
+"]" {printf("fecha-conchetes: %s", yytext);}
+
+{LOWERCASE}+    {printf("a lowercase: %s\n", yytext);}
+
 
 {UPPERCASE}+     {
         printf("a uppercase: %s\n", yytext);
 }
 
-"if"    {printf("condicional if: %s\n", yytext);}
+{DIGITO}+"."{DIGITO}*        {
+            printf( "Um valor real: %s (%g)\n", yytext,
+                    atof( yytext ) );
+            }
 
-"and"   {printf("uniao and: %s\n", yytext);}
-
-"then"  {printf("Um then: %s\n", yytext);}
-
-"begin" {printf("Um begin: %s\n", yytext);}
-
-"end"   {printf("Um end: %s\n", yytext);}
-
-"procedure"     {printf("Um procedure: %s\n", yytext);}
-
-"function"      {printf( "Um function: %s\n", yytext );}
-
-{ID}        printf( "Um identificador: %s\n", yytext );
-
-"+"|"-"|"*"|"/"   printf( "Um operador: %s\n", yytext );
+{ID}        {printf( "Um identificador: %s\n", yytext );}
 
 "{"[^}\n]*"}"     /* Lembre-se... comentários não tem utilidade! */
 
