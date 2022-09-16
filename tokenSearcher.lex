@@ -38,7 +38,10 @@ ID        [a-z][a-z0-9]*
 "+" {printf("operador de soma: %s\n", yytext);}
 "-" {printf("operador de subtracao: %s\n", yytext);}
 "*" {printf("operador de multiplicacao: %s\n", yytext);}
-"/" {printf( "Um operador de divisao: %s\n", yytext );}
+"/" {printf("operador de divisao: %s\n", yytext );}
+"=" {printf("recebe valor (=): %s\n", yytext);}
+"==" {printf("comparador de igualdade: %s\n", yytext);}
+"!=" {printf("compador de diferenca: %s\n", yytext);}
 
 "(" {printf("abre-parenteses: %s", yytext);}
 ")" {printf("fecha-parenteses: %s", yytext);}
@@ -47,12 +50,10 @@ ID        [a-z][a-z0-9]*
 "[" {printf("abre-conchetes: %s", yytext);}
 "]" {printf("fecha-conchetes: %s", yytext);}
 
-{LOWERCASE}+    {printf("a lowercase: %s\n", yytext);}
+{LOWERCASE}+    {printf("lowercase: %s\n", yytext);}
 
 
-{UPPERCASE}+     {
-        printf("a uppercase: %s\n", yytext);
-}
+{UPPERCASE}+     {printf("uppercase: %s\n", yytext);}
 
 {DIGITO}+"."{DIGITO}*        {
             printf( "Um valor real: %s (%g)\n", yytext,
