@@ -52,14 +52,8 @@ ID        [a-z][a-z0-9]*
 "]" {printf("fecha-conchetes: %s", yytext);}
 
 {LOWERCASE}+    {printf("lowercase: %s\n", yytext);}
-
-
 {UPPERCASE}+     {printf("uppercase: %s\n", yytext);}
-
-{DIGITO}+"."{DIGITO}*        {
-            printf( "Um valor real: %s (%g)\n", yytext,
-                    atof( yytext ) );
-            }
+{DIGITO}+"."{DIGITO}*        {printf( "Um valor real: %s (%g)\n", yytext, atof( yytext ) );}
 
 {ID}        {printf( "Um identificador: %s\n", yytext );}
 
