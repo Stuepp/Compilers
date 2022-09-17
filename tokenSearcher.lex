@@ -20,10 +20,7 @@ ID        [a-z][a-z0-9]*
 
 %%
 
-{DIGITO}+    {
-            printf( "Um valor inteiro: %s (%d)\n", yytext,
-                    atoi( yytext ) );
-            }
+{DIGITO}+    {printf( "Um valor inteiro: %s (%d)\n", yytext, atoi( yytext ) );}
 
 "if"    {printf("condicional if: %s\n", yytext);}
 "while" {printf("condicional while: %s\n", yytext);}
@@ -42,6 +39,10 @@ ID        [a-z][a-z0-9]*
 "=" {printf("recebe valor (=): %s\n", yytext);}
 "==" {printf("comparador de igualdade: %s\n", yytext);}
 "!=" {printf("compador de diferenca: %s\n", yytext);}
+"+=" {printf("operador de soma simplificado: %s\n", yytext);}
+"-=" {printf("operador de subtracao simplificado: %s\n", yytext);}
+"*=" {printf("operador de multiplicacao simplificado: %s\n", yytext);}
+"/=" {printf("operador de divisao simplificado: %s\n", yytext);}
 
 "(" {printf("abre-parenteses: %s", yytext);}
 ")" {printf("fecha-parenteses: %s", yytext);}
