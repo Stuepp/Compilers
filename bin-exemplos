@@ -1,4 +1,5 @@
 #!/bin/bash
+#abrir wsl terminal
 flex --noyywrap 1o-exemplo.lex
 gcc lex.yy.c -lfl -o 1o-exemplo
 flex --noyywrap 2o-exemplo.lex

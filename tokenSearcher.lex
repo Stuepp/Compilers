@@ -45,12 +45,12 @@ ID        [a-z][a-z0-9]*
 "*=" {printf("operador de multiplicacao simplificado: %s\n", yytext);}
 "/=" {printf("operador de divisao simplificado: %s\n", yytext);}
 
-"(" {printf("abre-parenteses: %s", yytext);}
-")" {printf("fecha-parenteses: %s", yytext);}
-"{" {printf("abre-chaves: %s", yytext);}
-"}" {printf("fecha-chaves: %s", yytext);}
-"[" {printf("abre-conchetes: %s", yytext);}
-"]" {printf("fecha-conchetes: %s", yytext);}
+"(" {printf("abre-parenteses: %s\n", yytext);}
+")" {printf("fecha-parenteses: %s\n", yytext);}
+"{" {printf("abre-chaves: %s\n", yytext);}
+"}" {printf("fecha-chaves: %s\n", yytext);}
+"[" {printf("abre-conchetes: %s\n", yytext);}
+"]" {printf("fecha-conchetes: %s\n", yytext);}
 
 {LOWERCASE}+    {printf("lowercase: %s\n", yytext);}
 {UPPERCASE}+     {printf("uppercase: %s\n", yytext);}
