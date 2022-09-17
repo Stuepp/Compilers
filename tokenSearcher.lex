@@ -23,6 +23,7 @@ ID        [a-z][a-z0-9]*
 {DIGITO}+    {printf( "Um valor inteiro: %s (%d)\n", yytext, atoi( yytext ) );}
 
 "if"    {printf("condicional if: %s\n", yytext);}
+"do"		{printf("faça do while: %s\n", yytext);}
 "while" {printf("condicional while: %s\n", yytext);}
 "and"   {printf("uniao and: %s\n", yytext);}
 "then"  {printf("Um then: %s\n", yytext);}
