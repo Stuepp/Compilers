@@ -7,6 +7,8 @@
 %{
 /* Para as funções atoi() e atof() */
 #include <math.h>
+#include <string.h>
+void transforma_romano(char *num);
 %}
 
 /* ========================================================================== */
@@ -14,6 +16,7 @@
 /* ========================================================================== */
 
 DIGITO    [0-9]
+ROMANOS	  [I,V,X,L,C,D,M]
 LOWERCASE [a-z]
 UPPERCASE [A-Z]
 ID        [a-z][a-z0-9]*
@@ -60,7 +63,11 @@ SIMBOLO 	["|" | " " | "#" | "$" | "&" | "," | "." | ":" | ";" | "?" | "@" | "\" 
 "[" {printf("abre-conchetes: %s\n", yytext);}
 "]" {printf("fecha-conchetes: %s\n", yytext);}
 
+<<<<<<< HEAD
 {SIMBOLO}	{printf("simbolo: %s\n",yytext);}
+=======
+{ROMANOS}+	{transforma_romano(yytext);}
+>>>>>>> origin/HEAD
 {LOWERCASE}+    {printf("lowercase: %s\n", yytext);}
 {UPPERCASE}+     {printf("uppercase: %s\n", yytext);}
 {DIGITO}+"."{DIGITO}*        {printf( "Um valor real: %s (%g)\n", yytext, atof( yytext ) );}
@@ -76,7 +83,21 @@ SIMBOLO 	["|" | " " | "#" | "$" | "&" | "," | "." | ":" | ";" | "?" | "@" | "\" 
 
 %%
 
+void transforma_romano(char *num){
+	int n = 0;
+	char romanos[] = {'I','V','X','L','C','D','M'};
+	int Nromanos[] = {1,5,10,50,100,500,1000};
 
+	for(int j = 0; j < strlen(num); j++){
+		for(int i = 0; i < 7; i++){
+			if(num[j] == romanos[i]){
+				n += Nromanos[i];
+				break;
+			}
+		}
+	}
+	printf("%d\n", n);
+}
 
 int main( argc, argv )
 int argc;
