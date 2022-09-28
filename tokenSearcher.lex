@@ -11,14 +11,14 @@
 
 typedef struct no{
 	char* token;
-	no* next;
-	no* prev;
+	struct no* next;
+	struct no* prev;
 }Mapa;
 
 Mapa *listaSimbolos = NULL;
 
 void transforma_romano(char *num);
-void start_table(Mapa table);
+Mapa add_to_end_table(Mapa **table, char* token)
 Mapa add_to_start_table(Mapa **table, char* token);
 Mapa *search_table(Mapa **table, char*token);
 void print_table(Mapa no);
@@ -40,57 +40,57 @@ SIMBOLO 	["|" | " " | "#" | "$" | "&" | "," | "." | ":" | ";" | "?" | "@" | "\" 
 
 %%
 
-{DIGITO}+    {printf( "Um valor inteiro: %s (%d)\n", yytext, atoi( yytext ) ); add_to_table(listaSimbolos, yytext);}
+{DIGITO}+    {printf( "Um valor inteiro: %s (%d)\n", yytext, atoi(yytext) ); add_to_end_table(listaSimbolos, yytext);}
 
-"if"    {printf("condicional if: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"do"		{printf("faça do while: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"while" {printf("condicional while: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"and"   {printf("uniao and: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"then"  {printf("Um then: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"begin" {printf("Um begin: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"end"   {printf("Um end: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"return" {printf("expressao return: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"procedure"     {printf("Um procedure: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"function"      {printf( "Um function: %s\n", yytext ); add_to_table(listaSimbolos, yytext);}
+"if"    {printf("condicional if: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"do"		{printf("faça do while: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"while" {printf("condicional while: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"and"   {printf("uniao and: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"then"  {printf("Um then: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"begin" {printf("Um begin: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"end"   {printf("Um end: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"return" {printf("expressao return: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"procedure"     {printf("Um procedure: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"function"      {printf( "Um function: %s\n", yytext ); add_to_end_table(listaSimbolos, yytext);}
 
-"+" {printf("operador de soma: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"-" {printf("operador de subtracao: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"*" {printf("operador de multiplicacao: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"/" {printf("operador de divisao: %s\n", yytext ); add_to_table(listaSimbolos, yytext);}
-"^"	{printf("elevar um número: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"=" {printf("recebe valor (=): %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"==" {printf("comparador de igualdade: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"!"		{printf("negacação: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"!=" {printf("compador de diferenca: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"+=" {printf("operador de soma simplificado: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"-=" {printf("operador de subtracao simplificado: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"*=" {printf("operador de multiplicacao simplificado: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"/=" {printf("operador de divisao simplificado: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-">"	{printf("greater then: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"<"	{printf("less then: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"%"	{printf("mod|.. %s\n",yytext); add_to_table(listaSimbolos, yytext);}
-"&&"	{printf("and: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"||"	{printf("or: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
+"+" {printf("operador de soma: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"-" {printf("operador de subtracao: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"*" {printf("operador de multiplicacao: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"/" {printf("operador de divisao: %s\n", yytext ); add_to_end_table(listaSimbolos, yytext);}
+"^"	{printf("elevar um número: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"=" {printf("recebe valor (=): %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"==" {printf("comparador de igualdade: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"!"		{printf("negacação: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"!=" {printf("compador de diferenca: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"+=" {printf("operador de soma simplificado: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"-=" {printf("operador de subtracao simplificado: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"*=" {printf("operador de multiplicacao simplificado: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"/=" {printf("operador de divisao simplificado: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+">"	{printf("greater then: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"<"	{printf("less then: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"%"	{printf("mod|.. %s\n",yytext); add_to_end_table(listaSimbolos, yytext);}
+"&&"	{printf("and: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"||"	{printf("or: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
 
-"(" {printf("abre-parenteses: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-")" {printf("fecha-parenteses: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"{" {printf("abre-chaves: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"}" {printf("fecha-chaves: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"[" {printf("abre-conchetes: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-"]" {printf("fecha-conchetes: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
+"(" {printf("abre-parenteses: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+")" {printf("fecha-parenteses: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"{" {printf("abre-chaves: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"}" {printf("fecha-chaves: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"[" {printf("abre-conchetes: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+"]" {printf("fecha-conchetes: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
 
-{SIMBOLO}	{printf("simbolo: %s\n",yytext); add_to_table(listaSimbolos, yytext);}
-{ROMANOS}+	{transforma_romano(yytext); add_to_table(listaSimbolos, yytext);}
-{LOWERCASE}+    {printf("lowercase: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-{UPPERCASE}+     {printf("uppercase: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
-{DIGITO}+"."{DIGITO}*        {printf( "Um valor real: %s (%g)\n", yytext, atof( yytext ) ); add_to_table(listaSimbolos, yytext);}
+{SIMBOLO}	{printf("simbolo: %s\n",yytext); add_to_end_table(listaSimbolos, yytext);}
+{ROMANOS}+	{transforma_romano(yytext); add_to_end_table(listaSimbolos, yytext);}
+{LOWERCASE}+    {printf("lowercase: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+{UPPERCASE}+     {printf("uppercase: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
+{DIGITO}+"."{DIGITO}*        {printf( "Um valor real: %s (%g)\n", yytext, atof( yytext ) ); add_to_end_table(listaSimbolos, yytext);}
 
-{ID}        {printf("Um identificador: %s\n", yytext ); add_to_table(listaSimbolos, yytext);}
-"!"{ID}			{printf("Negação do ID: %s\n", yytext); add_to_table(listaSimbolos, yytext);}
+{ID}        {printf("Um identificador: %s\n", yytext ); add_to_end_table(listaSimbolos, yytext);}
+"!"{ID}			{printf("Negação do ID: %s\n", yytext); add_to_end_table(listaSimbolos, yytext);}
 
-"{"[^}\n]*"}"     /* Lembre-se... comentários não tem utilidade! */
+"{"[^}\n]*"}"      /*Lembre-se... comentários não tem utilidade! */
 
-[ \t\n]+          /* Lembre-se... espaços em branco não tem utilidade! */
+[ \t\n]+           /*Lembre-se... espaços em branco não tem utilidade! */
 
 .           printf( "Caracter não reconhecido: %s\n", yytext );
 
@@ -112,14 +112,8 @@ void transforma_romano(char *num){
 	printf("%d\n", n);
 }
 
-void start_table(Mapa table){
-	table.token = NULL;
-	table.next = NULL;
-	table.token = NULL;
-}
-
 Mapa add_to_start_table(Mapa **table, char* token){
-	Mapa *aux, *newTable = malloc(Mapa);
+	Mapa *aux, *newTable = malloc(sizeof(Mapa));
 	if(newTable){
 		newTable->token = token;
 		newTable->prev = NULL;
@@ -134,7 +128,7 @@ Mapa add_to_start_table(Mapa **table, char* token){
 // will I need to insert in the middle of the table?
 
 Mapa add_to_end_table(Mapa **table, char* token){
-	Mapa *aux, *newTable = malloc(Mapa);
+	Mapa *aux, *newTable = malloc(sizeof(Mapa));
 	if(newTable){
 		newTable->token = token;
 		newTable->next = NULL;
