@@ -10,7 +10,8 @@
 #include <string.h>
 
 typedef struct no{
-	char* token;
+	char* token; // token na verdade é lexiograma, lexiogreme algo assim
+	// add token
 	struct no* next;
 	struct no* prev;
 }Mapa;
