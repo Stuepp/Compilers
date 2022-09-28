@@ -70,11 +70,8 @@ SIMBOLO 	["|" | " " | "#" | "$" | "&" | "," | "." | ":" | ";" | "?" | "@" | "\" 
 "[" {printf("abre-conchetes: %s\n", yytext);}
 "]" {printf("fecha-conchetes: %s\n", yytext);}
 
-<<<<<<< HEAD
 {SIMBOLO}	{printf("simbolo: %s\n",yytext);}
-=======
 {ROMANOS}+	{transforma_romano(yytext);}
->>>>>>> origin/HEAD
 {LOWERCASE}+    {printf("lowercase: %s\n", yytext);}
 {UPPERCASE}+     {printf("uppercase: %s\n", yytext);}
 {DIGITO}+"."{DIGITO}*        {printf( "Um valor real: %s (%g)\n", yytext, atof( yytext ) );}
@@ -125,13 +122,15 @@ Mapa add_to_start_table(Mapa **table, char* token){
 	}
 }
 
+// will I need to insert in the middle of the table?
+
 Mapa add_to_end_table(Mapa **table, char* token){
 	Mapa *aux, *newTable = malloc(Mapa);
 	if(newTable){
 		newTable->token = token;
 		newTable->next = NULL;
 
-		if(*table == NULL){ // is first?
+		if(*table == NULL){ // is the first?
 			*talbe = newTable;
 			newTable->prev = NULL;
 		}else{
