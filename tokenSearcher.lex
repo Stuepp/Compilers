@@ -8,6 +8,13 @@
 /* Para as funções atoi() e atof() */
 #include <math.h>
 #include <string.h>
+
+struct Mapa{
+	char* token;
+	Mapa* next;
+	Mapa* prev;
+} struct Mapa tabelaSimbolos;
+
 void transforma_romano(char *num);
 %}
 
@@ -99,8 +106,52 @@ void transforma_romano(char *num){
 	printf("%d\n", n);
 }
 
+void start_table(Mapa table){
+	table.token = NULL;
+	table.next = NULL;
+	table.token = NULL;
+}
+
+Mapa add_to_start_table(Mapa **table, char* token){
+	Mapa *aux, *newTable = malloc(Mapa);
+	if(newTable){
+		newTable->token = token;
+		newTable->prev = NULL;
+		if(*table)
+			(*table)->prev = newTable;
+		*table = newTable;
+	}else{
+		printf("ERRO AO ALOCAR MEMORIA\n");
+	}
+}
+
+Mapa add_to_end_table(Mapa **table, char* token){
+	Mapa *aux, *newTable = malloc(Mapa);
+	if(newTable){
+		newTable->token = token;
+		newTable->next = NULL;
+
+		if(*table == NULL){ // is first?
+			*talbe = newTable;
+			newTable->prev = NULL;
+		}else{
+			aux = *table;
+			while(aux->next){
+				aux = aux->next;
+			}
+			aux->next = newTable;
+			newTable->prev = aux;
+		}
+	}else{
+		printf("ERRO AO ALOCAR MEMORIA\n");
+	}
+
+	return table;
+}
+
 int main( argc, argv )
 int argc;
+
 char **argv;
 {
 	++argv, --argc;
