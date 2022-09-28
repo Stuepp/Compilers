@@ -10,7 +10,7 @@
 #include <string.h>
 
 typedef struct no{
-	char* token; // token na verdade é lexiograma, lexiogreme algo assim
+	char* lexema; // token na verdade é lexiograma, lexiogreme algo assim
 	// add token
 	struct no* next;
 	struct no* prev;
@@ -19,9 +19,9 @@ typedef struct no{
 Mapa *listaSimbolos = NULL;
 
 void transforma_romano(char *num);
-Mapa add_to_end_table(Mapa **table, char* token)
-Mapa add_to_start_table(Mapa **table, char* token);
-Mapa *search_table(Mapa **table, char*token);
+Mapa add_to_end_table(Mapa **table, char* lexema)
+Mapa add_to_start_table(Mapa **table, char* lexema);
+Mapa *search_table(Mapa **table, char*lexema);
 void print_table(Mapa no);
 
 
@@ -113,10 +113,10 @@ void transforma_romano(char *num){
 	printf("%d\n", n);
 }
 
-Mapa add_to_start_table(Mapa **table, char* token){
+Mapa add_to_start_table(Mapa **table, char* lexema){
 	Mapa *aux, *newTable = malloc(sizeof(Mapa));
 	if(newTable){
-		newTable->token = token;
+		newTable->lexema = lexema;
 		newTable->prev = NULL;
 		if(*table)
 			(*table)->prev = newTable;
@@ -128,10 +128,10 @@ Mapa add_to_start_table(Mapa **table, char* token){
 
 // will I need to insert in the middle of the table?
 
-Mapa add_to_end_table(Mapa **table, char* token){
+Mapa add_to_end_table(Mapa **table, char* lexema){
 	Mapa *aux, *newTable = malloc(sizeof(Mapa));
 	if(newTable){
-		newTable->token = token;
+		newTable->lexema = lexema;
 		newTable->next = NULL;
 
 		if(*table == NULL){ // is the first?
@@ -152,11 +152,11 @@ Mapa add_to_end_table(Mapa **table, char* token){
 	return table;
 }
 
-Mapa *search_table(Mapa **table, char*token){
+Mapa *search_table(Mapa **table, char*lexema){
 	Mapa *aux, *no = NULL;
 
 	aux = *table;
-	while(aux && aux->valor != token) // to improve, so it can better use the struct, or maybe it's already fine as it is...
+	while(aux && aux->valor != lexema) // to improve, so it can better use the struct, or maybe it's already fine as it is...
 		aux = aux->next;
 	if(aux)
 		no = aux;
