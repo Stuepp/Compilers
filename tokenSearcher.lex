@@ -19,17 +19,15 @@ typedef struct no{
 
 Mapa *listaSimbolos = NULL;
 
-void transforma_romano(char *num);
-Mapa add_to_end_table(Mapa **table, char* lexema, char* type)
-Mapa add_to_start_table(Mapa **table, char* lexema, char* type);
-Mapa *search_table(Mapa **table, char*lexema);
-void print_table(Mapa no);
+void add_to_end_table(Mapa *table, char *lexema, char *type);
+void add_to_start_table(Mapa *table, char *lexema, char *type);
+Mapa *search_table(Mapa *table, char *lexema);
+void print_table(Mapa *no);
 
 %}
 
 /* ========================================================================== */
 /* ===========================  Sessão DEFINIÇÔES  ========================== */
-/*ROMANOS	  [I,V,X,L,C,D,M]*/
 /* ========================================================================== */
 
 DIGITO    [0-9]
@@ -69,7 +67,7 @@ SIMBOLO 	["|" | " " | "#" | "$" | "&" | "," | "." | ":" | ";" | "?" | "@" | "\" 
 "==" {printf("comparador de igualdade: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "relacional");}
 "!=" {printf("compador de diferenca: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "relacional");}
 ">"	{printf("greater then: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "relacional");}
-"<"	{printf("less then: %s\n", yytext); add_to_end_table(listaSimbolos, yytex, "relacional"t);}
+"<"	{printf("less then: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "relacional");}
 "&&"	{printf("and: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "relacional");}
 "||"	{printf("or: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "relacional");}
 
@@ -80,7 +78,7 @@ SIMBOLO 	["|" | " " | "#" | "$" | "&" | "," | "." | ":" | ";" | "?" | "@" | "\" 
 "[" {printf("abre-conchetes: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "contexto");}
 "]" {printf("fecha-conchetes: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "contexto");}
 
-{SIMBOLO}	{printf("simbolo: %s\n",yytext); add_to_end_table(listaSimbolos, yytext, "simbolo");} /*{ROMANOS}+	{transforma_romano(yytext); add_to_end_table(listaSimbolos, yytext);}*/
+{SIMBOLO}	{printf("simbolo: %s\n",yytext); add_to_end_table(listaSimbolos, yytext, "simbolo");}
 {LOWERCASE}+    {printf("lowercase: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "caixaBaixa");}
 {UPPERCASE}+     {printf("uppercase: %s\n", yytext); add_to_end_table(listaSimbolos, yytext, "caixaAlta");}
 {DIGITO}+"."{DIGITO}*        {printf( "Um valor real: %s (%g)\n", yytext, atof( yytext ) ); add_to_end_table(listaSimbolos, yytext, "real");}
@@ -95,51 +93,34 @@ SIMBOLO 	["|" | " " | "#" | "$" | "&" | "," | "." | ":" | ";" | "?" | "@" | "\" 
 .           printf( "Caracter não reconhecido: %s\n", yytext );
 
 %%
-/*
-void transforma_romano(char *num){
-	int n = 0;
-	char romanos[] = {'I','V','X','L','C','D','M'};
-	int Nromanos[] = {1,5,10,50,100,500,1000};
 
-	for(int j = 0; j < strlen(num); j++){
-		for(int i = 0; i < 7; i++){
-			if(num[j] == romanos[i]){
-				n += Nromanos[i];
-				break;
-			}listaSimbolos
-		}
-	}
-	printf("%d\n", n);
-}*/
-
-Mapa *add_to_start_table(Mapa **table, char* lexema, char* type){
+void add_to_start_table(Mapa *table, char* lexema, char* type){
 	Mapa *aux = malloc(sizeof(Mapa)), *newTable = malloc(sizeof(Mapa));
 	if(newTable){
 		newTable->lexema = lexema;
 		newTable->prev = NULL;
-		if(*table)
-			(*table)->prev = newTable;
-		*table = newTable;
+		if(table)
+			table->prev = newTable;
+		table = newTable;
 	}else{
 		printf("ERRO AO ALOCAR MEMORIA\n");
 	}
-	return table;
 }
 
 // will I need to insert in the middle of the table?
 
-Mapa *add_to_end_table(Mapa **table, char* lexema, char* type){
+void add_to_end_table(Mapa *table, char* lexema, char* type){
 	Mapa *aux = malloc(sizeof(Mapa)), *newTable = malloc(sizeof(Mapa));
 	if(newTable){
 		newTable->lexema = lexema;
 		newTable->type = type;
 		newTable->next = NULL;
 
-		if(*table == NULL){ // is the first?
-			*table = newTable;
+		if(table == NULL){ // is the first?
+			table = newTable;
 			newTable->prev = NULL;
 		}else{
-			aux = *table;
+			aux = table;
 			while(aux->next != NULL){
 				aux = aux->next;
 			}
@@ -150,13 +131,13 @@ Mapa *add_to_end_table(Mapa **table, char* lexema, char* type){
 		printf("ERRO AO ALOCAR MEMORIA\n");
 	}
 
-	return table;
+	//return table;
 }
 
-Mapa *search_table(Mapa **table, char*lexema){
+Mapa *search_table(Mapa *table, char *lexema){
 	Mapa *aux, *no = NULL;
 
-	aux = *table;
+	aux = table;
 	while(aux && aux->lexema != lexema) // to improve, so it can better use the struct, or maybe it's already fine as it is...
 		aux = aux->next;
 	if(aux)
@@ -164,7 +145,7 @@ Mapa *search_table(Mapa **table, char*lexema){
 	return no;
 }
 
-void print_table(Mapa **no){
+void print_table(Mapa *no){
 	Mapa *aux = malloc(sizeof(Mapa));
 	aux = no;
 	printf("\n***TABLE***\n");
